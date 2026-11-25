@@ -1,6 +1,7 @@
-import { company, products, productsSection, services, ui } from "../content";
+import { about, company, products, productsSection, services, ui } from "../content";
 import { useLang, usePageTitle } from "../i18n";
-import { ButtonLink, Container, ProductCard, SectionHeading, ServiceCard } from "../components/ui";
+import { Icon } from "../components/Icon";
+import { ButtonLink, Container, ProductCard, SectionHeading, ServiceGrid } from "../components/ui";
 
 const Home = () => {
   usePageTitle(null);
@@ -9,7 +10,7 @@ const Home = () => {
   const stats = [
     { value: num(services.length), label: t(ui.statAreas) },
     { value: num(products.length), label: t(ui.statProducts) },
-    { value: num(2), label: t(ui.statLanguages) },
+    { value: t(ui.statVisionValue), label: t(ui.statVision) },
   ];
 
   return (
@@ -20,9 +21,10 @@ const Home = () => {
             <p className="inline-flex rounded-full bg-white px-3 py-1 text-sm font-semibold text-brand-700 ring-1 ring-inset ring-brand-500/25">
               {t(company.legalName)}
             </p>
-            <h1 className="mt-6 text-4xl font-bold leading-[1.2] text-navy-900 text-balance sm:text-5xl">
+            <h1 className="mt-6 text-[2rem] font-bold leading-[1.3] text-navy-900 text-balance sm:text-[2.6rem]">
               {t(company.tagline)}
             </h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 text-pretty">{t(company.summary)}</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <ButtonLink to="/services" arrow>
                 {t(ui.exploreServices)}
@@ -51,20 +53,39 @@ const Home = () => {
         </Container>
       </section>
 
+      <section className="py-6 sm:py-10">
+        <Container>
+          <div className="flex flex-col gap-6 rounded-3xl border border-brand-500/15 bg-brand-50/60 p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-10">
+            <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-white text-brand-600 shadow-sm ring-1 ring-brand-500/15">
+              <Icon name="eye" className="size-7" />
+            </span>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-brand-700">{t(about.visionTitle)}</p>
+              <p className="mt-2 text-xl font-semibold leading-9 text-navy-900 text-pretty sm:text-2xl sm:leading-10">
+                {t(about.vision)}
+              </p>
+            </div>
+            <div className="shrink-0">
+              <ButtonLink to="/about" variant="secondary" arrow>
+                {t(ui.learnMore)}
+              </ButtonLink>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       <section className="py-16 sm:py-24">
         <Container>
           <SectionHeading title={t(ui.solutionsTitle)} intro={t(ui.solutionsIntro)} />
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((s, i) => (
-              <ServiceCard key={s.id} service={s} index={i} />
-            ))}
+          <div className="mt-10">
+            <ServiceGrid services={services} />
           </div>
         </Container>
       </section>
 
       <section className="border-y border-slate-200 bg-slate-50 py-16 sm:py-24">
         <Container>
-          <SectionHeading title={t(productsSection.title)} intro={t(ui.productsIntro)} />
+          <SectionHeading title={t(productsSection.title)} intro={t(productsSection.intro)} />
           <div className="mt-10 grid gap-5 md:grid-cols-2">
             {products.map((p) => (
               <ProductCard key={p.id} product={p} />

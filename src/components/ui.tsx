@@ -75,12 +75,12 @@ export function DevNote({ children }: { children: ReactNode }) {
   );
 }
 
-export function ServiceCard({ service, index }: { service: Service; index: number }) {
+export function ServiceCard({ service, index, className = "" }: { service: Service; index: number; className?: string }) {
   const { t, num } = useLang();
   return (
     <Link
       to={`/services#${service.id}`}
-      className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-500/50 hover:shadow-lg hover:shadow-brand-500/10"
+      className={`group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-brand-500/50 hover:shadow-lg hover:shadow-brand-500/10 ${className}`}
     >
       <div className="flex items-center justify-between">
         <span className="grid size-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
@@ -89,12 +89,38 @@ export function ServiceCard({ service, index }: { service: Service; index: numbe
         <span className="text-sm font-semibold text-slate-400">{num(index + 1)}</span>
       </div>
       <h3 className="mt-5 text-lg font-bold leading-snug text-navy-900">{t(service.title)}</h3>
-      <p className="mt-2 flex-1 leading-7 text-slate-600">{t(service.summary)}</p>
+      <ul className="mt-3 flex-1 space-y-2 text-sm leading-6 text-slate-600">
+        {service.points.map((p) => (
+          <li key={p.en} className="flex gap-2.5">
+            <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand-500" aria-hidden="true" />
+            <span>{t(p)}</span>
+          </li>
+        ))}
+      </ul>
       <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
         {t(ui.details)}
         <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
       </span>
     </Link>
+  );
+}
+
+/** Service cards, three per row on wide screens, with a short last row centred. */
+export function ServiceGrid({ services }: { services: Service[] }) {
+  const n = services.length;
+  const placement = (i: number) => {
+    const classes = ["lg:col-span-2"];
+    if (n % 2 === 1 && i === n - 1) classes.push("sm:col-span-2");
+    if (n % 3 === 2 && i === n - 2) classes.push("lg:col-start-2");
+    if (n % 3 === 1 && i === n - 1) classes.push("lg:col-start-3");
+    return classes.join(" ");
+  };
+  return (
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+      {services.map((s, i) => (
+        <ServiceCard key={s.id} service={s} index={i} className={placement(i)} />
+      ))}
+    </div>
   );
 }
 

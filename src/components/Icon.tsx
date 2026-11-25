@@ -81,6 +81,32 @@ const paths = {
       <path d="m13.5 6.5 4 4" />
     </>
   ),
+  map: (
+    <>
+      <path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4Z" />
+      <path d="M9 4v13M15 6.5v13" />
+    </>
+  ),
+  pulse: <path d="M3 12h4l2.5-5 4 10 2.5-5h5" />,
+  flask: (
+    <>
+      <path d="M9 3h6M10 3v6l-5.2 9.1A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-2.9L14 9V3" />
+      <path d="M7.4 15h9.2" />
+    </>
+  ),
+  eye: (
+    <>
+      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </>
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof paths;
