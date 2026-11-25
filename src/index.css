@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Brand colours come straight from the Data Harmony logo (final color.svg). */
+@theme {
+  --color-brand-50: #e8f6fd;
+  --color-brand-100: #cdeefb;
+  --color-brand-500: #009fe3;
+  --color-brand-600: #0086c0;
+  --color-brand-700: #006d9c;
+  --color-navy-800: #00577b;
+  --color-navy-900: #004664;
+  --color-navy-950: #00324a;
+  --font-sans: "IBM Plex Sans Arabic", "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-slate-700 antialiased;
+}
+
+/* Keep focus visible for keyboard users on every interactive element. */
+:where(a, button, input, select, textarea):focus-visible {
+  @apply outline-2 outline-offset-2 outline-brand-500;
+}
